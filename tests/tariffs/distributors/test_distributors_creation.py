@@ -57,3 +57,15 @@ class TestTariff:
 
         Distributor.objects.create(**dis_1)
         Distributor.objects.create(**dis_2)
+
+    def test_name_tamanho_min_e_max(self):
+        dis_1 = {'name': '', 'cnpj': '75501604000110', 'university_id': self.university.id}
+        dis_2 = {'name': None, 'cnpj': '47457781000101', 'university_id': self.university.id}
+        dis_3 = {'name': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'cnpj': '43509384000185', 'university_id': self.university.id}
+        dis_4 = {'name': 'CEB Energia', 'cnpj': '38131740000130', 'university_id': self.university.id}
+
+        Distributor.objects.create(**dis_4)
+        with pytest.raises(IntegrityError):
+            Distributor.objects.create(**dis_1)
+            Distributor.objects.create(**dis_2)
+            Distributor.objects.create(**dis_3)
